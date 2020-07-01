@@ -13,7 +13,18 @@
       <label>Cerca un film scrivendo un titolo o una parola del titolo</label>
       <input type="text" id="search-film" placeholder="Titolo film o parte di esso">
       <button type="button" id="title-submit">Invia</button>
+      <div class="film-info">
+      </div>
     </div>
+
+    <!-- Inizio template handlebars -->
+    <script id="film-template" type="text/x-handlebars-template">
+        <span>Titolo: {{title}}</span>
+        <span>Titolo originale: {{originalTitle}}</span>
+        <span>Lingua: {{lenguage}}</span>
+        <span>Voto: {{vote}}</span>
+    </script>
+    <!-- Fine template handlebars -->
 
     <!-- Script di javascript -->
     <script type="text/javascript" src="js/script.js"></script>

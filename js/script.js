@@ -26,7 +26,9 @@ $(document).ready(function(){
           query: queryUser
         },
         success: function(dataResponse){
-          console.log(dataResponse.results);
+          // Salvo l'array risultante dalla chiamata API sul sito TMDB
+          var arrayFilm = dataResponse.results;
+          printFilmInfo(arrayFilm);
         },
         error: function(){
           alert: ('Si è verificato un errore sulla chiamata API');
@@ -35,4 +37,32 @@ $(document).ready(function(){
     );
       // Fine chiamata Ajax per vedere film
   };
+
+  // Funzione per stampare a schermo le info dei film usando Handelbars
+  // Accetta: arrayFilm, un array con le informazioni dei film
+  // Return: niente stampa a schermo le info di interesse
+  function printFilmInfo(arrayFilm) {
+    // Stampo a schermo le info dei film con Handelbars
+    var source = document.getElementById("film-template").innerHTML;
+    var template = Handlebars.compile(source);
+    // Ciclo per vedere le info di ogni singolo film
+    for (var i = 0; i < arrayFilm.length; i++) {
+      var singleFilm = arrayFilm[i];
+      var title = singleFilm.title;
+      var originalTitle = singleFilm.original_title;
+      var lenguage = singleFilm.original_language;
+      var vote = singleFilm.vote_average;
+      var context = {
+        title: title,
+        originalTitle: originalTitle,
+        lenguage: lenguage,
+        vote: vote
+      };
+      var html = template(context);
+      $('.film-info').append(html);
+    }
+  };
+  // FINE FUNZIONI
+
+
 });
