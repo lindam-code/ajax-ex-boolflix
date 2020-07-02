@@ -2,11 +2,10 @@ $(document).ready(function(){
   // API key: 4c34d07e5d578ee7bace09dde277dacb
   // API eg: https://api.themoviedb.org/3/movie/550?api_key=4c34d07e5d578ee7bace09dde277dacb
 
-  // Associo un evento click al bottone invia
-  $('#title-submit').click(function(){
-    // Creo la variabile stringa da passare alla chiamata API
-    // prendendo il valore della input
-    var userSearch = $('#search-film').val();
+  // Associo un evento click al bottone invia, salvo il valore della input
+  // e la passo ad una funzione che fa chiamata API
+  $('#search-submit').click(function(){
+    var userSearch = $('#search-movie').val();
     getMovies(userSearch);
   });
 
@@ -17,25 +16,25 @@ $(document).ready(function(){
   function getMovies(queryUser) {
     reset();
     // Inizio chiamata Ajax
+    var url = 'https://api.themoviedb.org/3/search/movie';
+    var apiKey = '4c34d07e5d578ee7bace09dde277dacb';
     $.ajax(
       {
-        url: 'https://api.themoviedb.org/3/search/movie',
+        url: url,
         method: 'GET',
         data: {
-          api_key: '4c34d07e5d578ee7bace09dde277dacb',
+          api_key: apiKey,
           language: 'it-IT',
           query: queryUser
         },
         success: function(dataResponse){
-          // Salvo l'array risultante dalla chiamata API sul sito TMDB
-          var arrayFilm = dataResponse.results;
-          if (arrayFilm.length > 0) {
-            printFilmInfo(arrayFilm);
+          var arrayMovies = dataResponse.results;
+          if (arrayMovies.length > 0) {
+            printMovies(arrayMovies);
           } else {
             var message = 'Errore: la parola scritta non produce risultati.';
             printError(message);
           };
-
         },
         error: function(){
           var message = 'Errore: non hai scritto un titolo da cercare.';
@@ -47,19 +46,19 @@ $(document).ready(function(){
   };
 
   // Funzione per stampare a schermo le info dei film usando Handelbars
-  // Accetta: arrayFilm, un array con le informazioni dei film
+  // Accetta: array, un array con le informazioni dei film
   // Return: niente stampa a schermo le info di interesse
-  function printFilmInfo(arrayFilm) {
+  function printMovies(arrayMovies) {
     // Preparo template di Handelbars
-    var source = $('#film-template').html();
+    var source = $('#movie-template').html();
     var template = Handlebars.compile(source);
     // Ciclo per vedere le info di ogni singolo film
-    for (var i = 0; i < arrayFilm.length; i++) {
-      var singleFilm = arrayFilm[i];
-      var title = singleFilm.title;
-      var originalTitle = singleFilm.original_title;
-      var lenguage = singleFilm.original_language;
-      var vote = singleFilm.vote_average;
+    for (var i = 0; i < arrayMovies.length; i++) {
+      var singleMovie = arrayMovies[i];
+      var title = singleMovie.title;
+      var originalTitle = singleMovie.original_title;
+      var lenguage = singleMovie.original_language;
+      var vote = singleMovie.vote_average;
       var context = {
         title: title,
         originalTitle: originalTitle,
@@ -67,13 +66,13 @@ $(document).ready(function(){
         vote: vote
       };
       var html = template(context);
-      $('#film-container').append(html);
+      $('#movie-container').append(html);
     }
   };
 
   // Funzione che svuota nella pagina il contenitore dei film
   function reset(){
-    $('#film-container').text('');
+    $('#movie-container').text('');
   };
 
   // Funzione per stampare un messaggio di errore
@@ -85,7 +84,7 @@ $(document).ready(function(){
     var template = Handlebars.compile(source);
     var context = { message: message };
     var html = template(context);
-    $('#film-container').append(html);
+    $('#movie-container').append(html);
   };
   // FINE FUNZIONI
 });
