@@ -7,6 +7,7 @@ $(document).ready(function(){
   $('#search-submit').click(function(){
     var userSearch = $('#search-movie').val();
     getMovies(userSearch);
+    getTvSeries(userSearch);
   });
 
   // FUNZIONI
@@ -32,7 +33,7 @@ $(document).ready(function(){
           if (arrayMovies.length > 0) {
             printMovies(arrayMovies);
           } else {
-            var message = 'Errore: la parola scritta non produce risultati.';
+            var message = 'Mi dispiace: la parola scritta non produce risultati per i film.';
             printError(message);
           };
         },
@@ -43,6 +44,37 @@ $(document).ready(function(){
       }
     );
       // Fine chiamata Ajax per vedere film
+  };
+
+  function getTvSeries(queryUser){
+    reset();
+    // Inizio chiamata Ajax
+    var url = 'https://api.themoviedb.org/3/search/tv';
+    var apiKey = '4c34d07e5d578ee7bace09dde277dacb';
+    $.ajax(
+      {
+        url: url,
+        method: 'GET',
+        data: {
+          api_key: apiKey,
+          language: 'it-IT',
+          query: queryUser
+        },
+        success: function(dataResponse){
+          var arrayTvMovies = dataResponse.results;
+          if (arrayTvMovies.length > 0) {
+            printMovies(arrayTvMovies);
+          } else {
+            var message = 'Mi dispiace: la parola scritta non produce risultati per le serie tv.';
+            printError(message);
+          };
+        },
+        error: function(){
+          var message = 'Errore: non hai scritto un titolo da cercare.';
+          printError(message);
+        }
+      }
+    );
   };
 
   // Funzione per stampare a schermo le info dei film usando Handelbars
@@ -56,7 +88,13 @@ $(document).ready(function(){
     for (var i = 0; i < arrayMovies.length; i++) {
       var singleMovie = arrayMovies[i];
       var title = singleMovie.title;
+      if (title == undefined) {
+        title = singleMovie.name;
+      };
       var originalTitle = singleMovie.original_title;
+      if (originalTitle == undefined) {
+        originalTitle = singleMovie.original_name;
+      };
       var lenguage = singleMovie.original_language;
       var flag = getFlag(lenguage);
       var vote = singleMovie.vote_average;
