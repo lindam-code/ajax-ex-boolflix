@@ -46,6 +46,9 @@ $(document).ready(function(){
       // Fine chiamata Ajax per vedere film
   };
 
+  // Funzione che fa la chiamata Aajax per le serie Tv
+  // Accetta: queryUser, stringa del titolo (o una parte) della serie da cercare
+  // Return: stampa a schermo le info delle serie Tv
   function getTvSeries(queryUser){
     reset();
     // Inizio chiamata Ajax
@@ -91,6 +94,8 @@ $(document).ready(function(){
       if (title == undefined) {
         title = singleMovie.name;
       };
+      var coverSize = '/w154';
+      var cover = '<img src="https://image.tmdb.org/t/p'+ coverSize + singleMovie.poster_path +'" alt="cover movie">';
       var originalTitle = singleMovie.original_title;
       if (originalTitle == undefined) {
         originalTitle = singleMovie.original_name;
@@ -102,6 +107,7 @@ $(document).ready(function(){
 
       var context = {
         title: title,
+        cover: cover,
         originalTitle: originalTitle,
         lenguage: flag,
         vote: voteStar
