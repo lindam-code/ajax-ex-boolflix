@@ -58,22 +58,10 @@ $(document).ready(function(){
       var title = singleMovie.title;
       var originalTitle = singleMovie.original_title;
       var lenguage = singleMovie.original_language;
-
       var vote = singleMovie.vote_average;
       // Al posto del voto metto le 5 stelline
-      var voteStandardized = Math.ceil(vote/2);
-      console.log(voteStandardized);
-      var voteStar = '';
-      for (var j = 0; j < 5; j++) {
-        if (j < voteStandardized) {
-          voteStar += '<i class="fas fa-star"></i>';
-        } else {
-          voteStar += '<i class="far fa-star"></i>';
-        };
-      };
-      console.log(voteStar);
+      var voteStar = star(vote);
 
-      // var vote = '<i class="fas fa-star"></i><i class="far fa-star"></i>';
       var context = {
         title: title,
         originalTitle: originalTitle,
@@ -100,6 +88,22 @@ $(document).ready(function(){
     var context = { message: message };
     var html = template(context);
     $('#movie-container').append(html);
+  };
+
+  // Funzione che traforma un voto decimale in un voto a 5 stelline
+  // Accetta: vote, un voto decimale
+  // Return: voteStar, una stringa con le stelline di font awesome
+  function star(vote) {
+    var voteStandardized = Math.ceil(vote/2);
+    var voteStar = '';
+    for (var j = 0; j < 5; j++) {
+      if (j < voteStandardized) {
+        voteStar += '<i class="fas fa-star"></i>';
+      } else {
+        voteStar += '<i class="far fa-star"></i>';
+      };
+    };
+    return voteStar;
   };
   // FINE FUNZIONI
 });
