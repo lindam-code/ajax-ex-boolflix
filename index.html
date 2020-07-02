@@ -10,9 +10,6 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.js"></script>
   </head>
   <body>
-
-    <i class="fas fa-star"></i>
-    <i class="far fa-star"></i>
     <div class="main-wrapper">
       <header>
         <input type="text" id="search-movie" placeholder="Cerca un film o serie tv">
@@ -28,7 +25,7 @@
         <h2>Titolo: {{title}}</h2>
         <ul>
           <li>Titolo originale: {{originalTitle}}</li>
-          <li>Lingua: {{lenguage}}</li>
+          <li>Lingua: {{{lenguage}}}</li>
           <li>Voto: {{{vote}}}</li>
         </ul>
     </script>

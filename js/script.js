@@ -58,14 +58,14 @@ $(document).ready(function(){
       var title = singleMovie.title;
       var originalTitle = singleMovie.original_title;
       var lenguage = singleMovie.original_language;
+      var flag = getFlag(lenguage);
       var vote = singleMovie.vote_average;
-      // Al posto del voto metto le 5 stelline
-      var voteStar = star(vote);
+      var voteStar = getStar(vote);
 
       var context = {
         title: title,
         originalTitle: originalTitle,
-        lenguage: lenguage,
+        lenguage: flag,
         vote: voteStar
       };
       var html = template(context);
@@ -93,7 +93,7 @@ $(document).ready(function(){
   // Funzione che traforma un voto decimale in un voto a 5 stelline
   // Accetta: vote, un voto decimale
   // Return: voteStar, una stringa con le stelline di font awesome
-  function star(vote) {
+  function getStar(vote) {
     var voteStandardized = Math.ceil(vote/2);
     var voteStar = '';
     for (var j = 0; j < 5; j++) {
@@ -104,6 +104,40 @@ $(document).ready(function(){
       };
     };
     return voteStar;
+  };
+
+  // Funzione che associa bandiera alla lingua originale del film
+  // Se non presente nella lista delle bandiere scrive la lingua
+  // Accetta: lenguage, stringa con la sigla della lingua
+  // Return: flag, una srtinga con un immagina della bandiera
+  function getFlag(lenguage){
+    var flag = '';
+    switch (lenguage) {
+      case 'it':
+      flag = '<img src="img/italy-flag.png" alt="italy-flag" class="flag">';
+      break;
+      case 'en':
+      flag = '<img src="img/united-kingdom-flag.png" alt="UK-flag" class="flag">';
+      break;
+      case 'es':
+      flag = '<img src="img/spain-flag.png" alt="spain-flag" class="flag">';
+      break;
+      case 'fr':
+      flag = '<img src="img/france-flag.png" alt="france-flag" class="flag">';
+      break;
+      case 'pt':
+      flag = '<img src="img/portugal-flag.png" alt="portugal-flag" class="flag">';
+      break;
+      case 'ja':
+      flag = '<img src="img/japan-flag.png" alt="japan-flag" class="flag">';
+      break;
+      case 'de':
+      flag = '<img src="img/germany-flag.png" alt="germany-flag" class="flag">';
+      break;
+      default:
+      flag = lenguage;
+    };
+    return flag;
   };
   // FINE FUNZIONI
 });
