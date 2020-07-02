@@ -80,8 +80,8 @@ $(document).ready(function(){
     );
   };
 
-  // Funzione per stampare a schermo le info dei film usando Handelbars
-  // Accetta: array, un array con le informazioni dei film
+  // Funzione per stampare a schermo le info dei film o serie Tv usando Handelbars
+  // Accetta: array, un array con le informazioni dei film o delle serie Tv
   // Return: niente stampa a schermo le info di interesse
   function printMovies(arrayMovies) {
     // Preparo template di Handelbars
@@ -134,7 +134,7 @@ $(document).ready(function(){
     $('#movie-container').append(html);
   };
 
-  // Funzione che traforma un voto decimale in un voto a 5 stelline
+  // Funzione che trasforma un voto decimale in un voto a 5 stelline
   // Accetta: vote, un voto decimale
   // Return: voteStar, una stringa con le stelline di font awesome
   function getStar(vote) {
@@ -150,7 +150,7 @@ $(document).ready(function(){
     return voteStar;
   };
 
-  // Funzione che associa bandiera alla lingua originale del film
+  // Funzione che associa la bandiera alla lingua originale
   // Se non presente nella lista delle bandiere scrive la lingua
   // Accetta: lenguage, stringa con la sigla della lingua
   // Return: flag, una srtinga con un immagina della bandiera
