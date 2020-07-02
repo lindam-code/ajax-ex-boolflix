@@ -29,10 +29,17 @@ $(document).ready(function(){
         success: function(dataResponse){
           // Salvo l'array risultante dalla chiamata API sul sito TMDB
           var arrayFilm = dataResponse.results;
-          printFilmInfo(arrayFilm);
+          if (arrayFilm.length > 0) {
+            printFilmInfo(arrayFilm);
+          } else {
+            var message = 'Errore: la parola scritta non produce risultati.';
+            printError(message);
+          };
+
         },
         error: function(){
-          alert: ('Si è verificato un errore sulla chiamata API');
+          var message = 'Errore: non hai scritto un titolo da cercare.';
+          printError(message);
         }
       }
     );
@@ -43,8 +50,8 @@ $(document).ready(function(){
   // Accetta: arrayFilm, un array con le informazioni dei film
   // Return: niente stampa a schermo le info di interesse
   function printFilmInfo(arrayFilm) {
-    // Stampo a schermo le info dei film con Handelbars
-    var source = document.getElementById("film-template").innerHTML;
+    // Preparo template di Handelbars
+    var source = $('#film-template').html();
     var template = Handlebars.compile(source);
     // Ciclo per vedere le info di ogni singolo film
     for (var i = 0; i < arrayFilm.length; i++) {
@@ -64,9 +71,21 @@ $(document).ready(function(){
     }
   };
 
-  // Funzion che svuota nella pagina il contenitore dei film
+  // Funzione che svuota nella pagina il contenitore dei film
   function reset(){
     $('#film-container').text('');
+  };
+
+  // Funzione per stampare un messaggio di errore
+  // Accetta: message, messaggio da stampare
+  // Return: nulla, stampa il messaggio a schermo
+  function printError(message){
+    // Preparo template di Handelbars
+    var source = $('#error-template').html();
+    var template = Handlebars.compile(source);
+    var context = { message: message };
+    var html = template(context);
+    $('#film-container').append(html);
   };
   // FINE FUNZIONI
 });
