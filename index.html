@@ -4,11 +4,15 @@
     <meta charset="utf-8">
     <title>Boolfix</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.js"></script>
   </head>
   <body>
+
+    <i class="fas fa-star"></i>
+    <i class="far fa-star"></i>
     <div class="main-wrapper">
       <header>
         <input type="text" id="search-movie" placeholder="Cerca un film o serie tv">
@@ -25,7 +29,7 @@
         <ul>
           <li>Titolo originale: {{originalTitle}}</li>
           <li>Lingua: {{lenguage}}</li>
-          <li>Voto: {{vote}}</li>
+          <li>Voto: {{{vote}}}</li>
         </ul>
     </script>
 

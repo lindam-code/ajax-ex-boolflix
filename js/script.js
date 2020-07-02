@@ -52,18 +52,33 @@ $(document).ready(function(){
     // Preparo template di Handelbars
     var source = $('#movie-template').html();
     var template = Handlebars.compile(source);
-    // Ciclo per vedere le info di ogni singolo film
+
     for (var i = 0; i < arrayMovies.length; i++) {
       var singleMovie = arrayMovies[i];
       var title = singleMovie.title;
       var originalTitle = singleMovie.original_title;
       var lenguage = singleMovie.original_language;
+
       var vote = singleMovie.vote_average;
+      // Al posto del voto metto le 5 stelline
+      var voteStandardized = Math.ceil(vote/2);
+      console.log(voteStandardized);
+      var voteStar = '';
+      for (var j = 0; j < 5; j++) {
+        if (j < voteStandardized) {
+          voteStar += '<i class="fas fa-star"></i>';
+        } else {
+          voteStar += '<i class="far fa-star"></i>';
+        };
+      };
+      console.log(voteStar);
+
+      // var vote = '<i class="fas fa-star"></i><i class="far fa-star"></i>';
       var context = {
         title: title,
         originalTitle: originalTitle,
         lenguage: lenguage,
-        vote: vote
+        vote: voteStar
       };
       var html = template(context);
       $('#movie-container').append(html);
