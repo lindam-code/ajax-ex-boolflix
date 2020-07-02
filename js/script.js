@@ -2,19 +2,20 @@ $(document).ready(function(){
   // API key: 4c34d07e5d578ee7bace09dde277dacb
   // API eg: https://api.themoviedb.org/3/movie/550?api_key=4c34d07e5d578ee7bace09dde277dacb
 
-  // Assoccio un evento click al bottone invia
+  // Associo un evento click al bottone invia
   $('#title-submit').click(function(){
-    // Creo la variabile stringa da passare alla chiamata
-    // Prendendo il valore della input
-    var titleFilm = $('#search-film').val();
-    chiamatAjax(titleFilm);
+    // Creo la variabile stringa da passare alla chiamata API
+    // prendendo il valore della input
+    var userSearch = $('#search-film').val();
+    getMovies(userSearch);
   });
 
   // FUNZIONI
   // Funzione che fa la chiamata Aajax per i film
   // Accetta: queryUser, stringa del titolo (o una parte) del film  da cercare
-  // Return:
-  function chiamatAjax(queryUser) {
+  // Return: stampa a schermo le info dei film
+  function getMovies(queryUser) {
+    reset();
     // Inizio chiamata Ajax
     $.ajax(
       {
@@ -59,10 +60,13 @@ $(document).ready(function(){
         vote: vote
       };
       var html = template(context);
-      $('.film-info').append(html);
+      $('#film-container').append(html);
     }
   };
+
+  // Funzion che svuota nella pagina il contenitore dei film
+  function reset(){
+    $('#film-container').text('');
+  };
   // FINE FUNZIONI
-
-
 });

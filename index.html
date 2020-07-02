@@ -10,19 +10,23 @@
   </head>
   <body>
     <div class="main-wrapper">
-      <label>Cerca un film scrivendo un titolo o una parola del titolo</label>
-      <input type="text" id="search-film" placeholder="Titolo film o parte di esso">
-      <button type="button" id="title-submit">Invia</button>
-      <div class="film-info">
+      <header>
+        <input type="text" id="search-film" placeholder="Cerca un film o serie tv">
+        <button id="title-submit">Invia</button>
+      </header>
+
+      <div id="film-container">
       </div>
     </div>
 
     <!-- Inizio template handlebars -->
     <script id="film-template" type="text/x-handlebars-template">
-        <span>Titolo: {{title}}</span>
-        <span>Titolo originale: {{originalTitle}}</span>
-        <span>Lingua: {{lenguage}}</span>
-        <span>Voto: {{vote}}</span>
+        <h2>Titolo: {{title}}</h2>
+        <ul>
+          <li>Titolo originale: {{originalTitle}}</li>
+          <li>Lingua: {{lenguage}}</li>
+          <li>Voto: {{vote}}</li>
+        </ul>
     </script>
     <!-- Fine template handlebars -->
 
