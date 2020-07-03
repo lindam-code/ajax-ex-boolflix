@@ -24,17 +24,18 @@
 
     <!-- Inizio template handlebars -->
     <script id="movie-template" type="text/x-handlebars-template">
-      <div class="movie-cover">{{{cover}}}</div>
-      <div class="movie-info">
-        <h2>Titolo: {{title}}</h2>
-        <ul>
-          <li>Titolo originale: {{originalTitle}}</li>
-          <li>Lingua: {{{lenguage}}}</li>
-          <li>Voto: {{{vote}}}</li>
-          <li>Type: {{type}}</li>
-        </ul>
+      <div class="movie">
+        {{{cover}}}
+        <div class="movie-info hide">
+          <h2>Titolo: {{title}}</h2>
+          <ul>
+            <li>Titolo originale: {{originalTitle}}</li>
+            <li>Lingua: {{{lenguage}}}</li>
+            <li>Voto: {{{vote}}}</li>
+            <li>Type: {{type}}</li>
+          </ul>
+        </div>
       </div>
-
     </script>
 
     <script id="error-template" type="text/x-handlebars-template">
