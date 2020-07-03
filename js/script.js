@@ -6,6 +6,7 @@ $(document).ready(function(){
   // e la passo ad una funzione che fa chiamata API
   $('#search-submit').click(function(){
     var userSearch = $('#search-movie').val();
+    reset();
     getData(userSearch,'Movies');
     getData(userSearch,'TV');
   });
@@ -16,7 +17,6 @@ $(document).ready(function(){
   // Accetta: type, tipo di dato da cercare ('Movies', 'TV')
   // Return: stampa a schermo le info dei film e delle serie TV
   function getData(queryUser,type) {
-    reset();
     // Inizio chiamata Ajax
     if (type === 'Movies') {
       var url = 'https://api.themoviedb.org/3/search/movie';
@@ -57,7 +57,7 @@ $(document).ready(function(){
   };
 
   // Funzione per stampare a schermo le info dei film o serie Tv usando Handelbars
-  // Accetta: array, un array con le informazioni dei film o delle serie Tv
+  // Accetta: arrayMovies, un array con le informazioni dei film o delle serie Tv
   // Return: niente stampa a schermo le info di interesse
   function printData(arrayMovies,type) {
     // Preparo template di Handelbars
@@ -66,27 +66,20 @@ $(document).ready(function(){
 
     for (var i = 0; i < arrayMovies.length; i++) {
       var singleMovie = arrayMovies[i];
-      var title = singleMovie.title;
-      if (title == undefined) {
-        title = singleMovie.name;
-      };
+      if (type === 'Movies') {
+        var title = singleMovie.title;
+        var originalTitle = singleMovie.original_title;
+      } else {
+        var title = singleMovie.name;
+        var originalTitle = singleMovie.original_name;
+      }
       var coverSize = '/w154';
-      var cover = '<img src="https://image.tmdb.org/t/p'+ coverSize + singleMovie.poster_path +'" alt="cover movie">';
-      var originalTitle = singleMovie.original_title;
-      if (originalTitle == undefined) {
-        originalTitle = singleMovie.original_name;
-      };
-      var lenguage = singleMovie.original_language;
-      var flag = getFlag(lenguage);
-      var vote = singleMovie.vote_average;
-      var voteStar = getStar(vote);
-
       var context = {
         title: title,
-        cover: cover,
+        cover: '<img src="https://image.tmdb.org/t/p'+ coverSize + singleMovie.poster_path +'" alt="cover movie">',
         originalTitle: originalTitle,
-        lenguage: flag,
-        vote: voteStar,
+        lenguage: getFlag(singleMovie.original_language),
+        vote: convertToStar(singleMovie.vote_average),
         type: type
       };
       var html = template(context);
@@ -114,7 +107,7 @@ $(document).ready(function(){
   // Funzione che trasforma un voto decimale in un voto a 5 stelline
   // Accetta: vote, un voto decimale
   // Return: voteStar, una stringa con le stelline di font awesome
-  function getStar(vote) {
+  function convertToStar(vote) {
     var voteStandardized = Math.ceil(vote/2);
     var voteStar = '';
     for (var i = 1; i <= 5; i++) {
