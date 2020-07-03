@@ -4,12 +4,21 @@ $(document).ready(function(){
 
   // Associo un evento click al bottone invia, salvo il valore della input
   // e la passo ad una funzione che fa chiamata API
-  $('#search-submit').click(function(){
-    var userSearch = $('#search-movie').val();
-    reset();
-    getData(userSearch,'Movies');
-    getData(userSearch,'TV');
+  $('#search-movie').keypress(function(event){
+    if (event.which === 13) {
+      var userSearch = $('#search-movie').val();
+      reset();
+      getData(userSearch,'Movies');
+      getData(userSearch,'TV');
+    };
   });
+
+  // $('#search-submit').click(function(){
+  //   var userSearch = $('#search-movie').val();
+  //   reset();
+  //   getData(userSearch,'Movies');
+  //   getData(userSearch,'TV');
+  // });
 
   // FUNZIONI
   // Funzione che fa la chiamata Aajax per i film e le serie TV
