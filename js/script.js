@@ -2,8 +2,8 @@ $(document).ready(function(){
   // API key: 4c34d07e5d578ee7bace09dde277dacb
   // API eg: https://api.themoviedb.org/3/movie/550?api_key=4c34d07e5d578ee7bace09dde277dacb
 
-  // Associo un evento click al bottone invia, salvo il valore della input
-  // e la passo ad una funzione che fa chiamata API
+  // Associo un evento al tasto invio della input, salvo il valore della input
+  // e la passo ad una funzione che fa le chiamate API e stampa a schermo i risultati
   $('#search-movie').keypress(function(event){
     if (event.which === 13) {
       var userSearch = $('#search-movie').val();
@@ -12,13 +12,6 @@ $(document).ready(function(){
       getData(userSearch,'TV');
     };
   });
-
-  // $('#search-submit').click(function(){
-  //   var userSearch = $('#search-movie').val();
-  //   reset();
-  //   getData(userSearch,'Movies');
-  //   getData(userSearch,'TV');
-  // });
 
   // FUNZIONI
   // Funzione che fa la chiamata Aajax per i film e le serie TV
@@ -82,7 +75,7 @@ $(document).ready(function(){
         var title = singleMovie.name;
         var originalTitle = singleMovie.original_name;
       }
-      var coverSize = '/w154';
+      var coverSize = '/w342';
       var context = {
         title: title,
         cover: '<img src="https://image.tmdb.org/t/p'+ coverSize + singleMovie.poster_path +'" alt="cover movie">',
