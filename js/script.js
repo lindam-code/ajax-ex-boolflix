@@ -6,18 +6,24 @@ $(document).ready(function(){
   // e la passo ad una funzione che fa chiamata API
   $('#search-submit').click(function(){
     var userSearch = $('#search-movie').val();
-    getMovies(userSearch);
-    getTvSeries(userSearch);
+    getData(userSearch,'Movies');
+    getData(userSearch,'TV');
   });
 
   // FUNZIONI
-  // Funzione che fa la chiamata Aajax per i film
-  // Accetta: queryUser, stringa del titolo (o una parte) del film  da cercare
-  // Return: stampa a schermo le info dei film
-  function getMovies(queryUser) {
+  // Funzione che fa la chiamata Aajax per i film e le serie TV
+  // Accetta: queryUser, stringa del titolo (o una parte) del film o della serie da cercare
+  // Accetta: type, tipo di dato da cercare ('Movies', 'TV')
+  // Return: stampa a schermo le info dei film e delle serie TV
+  function getData(queryUser,type) {
     reset();
     // Inizio chiamata Ajax
-    var url = 'https://api.themoviedb.org/3/search/movie';
+    if (type === 'Movies') {
+      var url = 'https://api.themoviedb.org/3/search/movie';
+    } else {
+      var url = 'https://api.themoviedb.org/3/search/tv';
+    }
+
     var apiKey = '4c34d07e5d578ee7bace09dde277dacb';
     $.ajax(
       {
@@ -29,11 +35,15 @@ $(document).ready(function(){
           query: queryUser
         },
         success: function(dataResponse){
-          var arrayMovies = dataResponse.results;
-          if (arrayMovies.length > 0) {
-            printMovies(arrayMovies);
+          var arrayData = dataResponse.results;
+          if (arrayData.length > 0) {
+            printData(arrayData,type);
           } else {
-            var message = 'Mi dispiace: la parola scritta non produce risultati per i film.';
+            if (type === 'Movies') {
+              var message = 'Mi dispiace: la parola scritta non produce risultati per i film.';
+            } else {
+               var message = 'Mi dispiace: la parola scritta non produce risultati per le serie tv.';
+            }
             printError(message);
           };
         },
@@ -46,44 +56,10 @@ $(document).ready(function(){
       // Fine chiamata Ajax per vedere film
   };
 
-  // Funzione che fa la chiamata Aajax per le serie Tv
-  // Accetta: queryUser, stringa del titolo (o una parte) della serie da cercare
-  // Return: stampa a schermo le info delle serie Tv
-  function getTvSeries(queryUser){
-    reset();
-    // Inizio chiamata Ajax
-    var url = 'https://api.themoviedb.org/3/search/tv';
-    var apiKey = '4c34d07e5d578ee7bace09dde277dacb';
-    $.ajax(
-      {
-        url: url,
-        method: 'GET',
-        data: {
-          api_key: apiKey,
-          language: 'it-IT',
-          query: queryUser
-        },
-        success: function(dataResponse){
-          var arrayTvMovies = dataResponse.results;
-          if (arrayTvMovies.length > 0) {
-            printMovies(arrayTvMovies);
-          } else {
-            var message = 'Mi dispiace: la parola scritta non produce risultati per le serie tv.';
-            printError(message);
-          };
-        },
-        error: function(){
-          var message = 'Errore: non hai scritto un titolo da cercare.';
-          printError(message);
-        }
-      }
-    );
-  };
-
   // Funzione per stampare a schermo le info dei film o serie Tv usando Handelbars
   // Accetta: array, un array con le informazioni dei film o delle serie Tv
   // Return: niente stampa a schermo le info di interesse
-  function printMovies(arrayMovies) {
+  function printData(arrayMovies,type) {
     // Preparo template di Handelbars
     var source = $('#movie-template').html();
     var template = Handlebars.compile(source);
@@ -110,7 +86,8 @@ $(document).ready(function(){
         cover: cover,
         originalTitle: originalTitle,
         lenguage: flag,
-        vote: voteStar
+        vote: voteStar,
+        type: type
       };
       var html = template(context);
       $('#movie-container').append(html);
@@ -151,9 +128,9 @@ $(document).ready(function(){
   };
 
   // Funzione che associa la bandiera alla lingua originale
-  // Se non presente nella lista delle bandiere scrive la lingua
+  // se presente nella lista delle bandiere, altrimenti scrive la sigla della lingua
   // Accetta: lenguage, stringa con la sigla della lingua
-  // Return: flag, una srtinga con un immagina della bandiera
+  // Return: flag, una srtinga con un immagine della bandiera o la sigla della lingua
   function getFlag(lenguage){
     var arrayFlag = ["de","en","es","fr","it","ja","pt"];
     var flag = '';
