@@ -155,32 +155,13 @@ $(document).ready(function(){
   // Accetta: lenguage, stringa con la sigla della lingua
   // Return: flag, una srtinga con un immagina della bandiera
   function getFlag(lenguage){
+    var arrayFlag = ["de","en","es","fr","it","ja","pt"];
     var flag = '';
-    switch (lenguage) {
-      case 'it':
-      flag = '<img src="img/italy-flag.png" alt="italy-flag" class="flag">';
-      break;
-      case 'en':
-      flag = '<img src="img/united-kingdom-flag.png" alt="UK-flag" class="flag">';
-      break;
-      case 'es':
-      flag = '<img src="img/spain-flag.png" alt="spain-flag" class="flag">';
-      break;
-      case 'fr':
-      flag = '<img src="img/france-flag.png" alt="france-flag" class="flag">';
-      break;
-      case 'pt':
-      flag = '<img src="img/portugal-flag.png" alt="portugal-flag" class="flag">';
-      break;
-      case 'ja':
-      flag = '<img src="img/japan-flag.png" alt="japan-flag" class="flag">';
-      break;
-      case 'de':
-      flag = '<img src="img/germany-flag.png" alt="germany-flag" class="flag">';
-      break;
-      default:
+    if (arrayFlag.includes(lenguage)) {
+      flag = '<img src="img/' + lenguage + '.png" alt="flag" class="flag">'
+    } else {
       flag = lenguage;
-    };
+    }
     return flag;
   };
   // FINE FUNZIONI
