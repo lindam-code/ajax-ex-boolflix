@@ -140,8 +140,8 @@ $(document).ready(function(){
   function getStar(vote) {
     var voteStandardized = Math.ceil(vote/2);
     var voteStar = '';
-    for (var j = 0; j < 5; j++) {
-      if (j < voteStandardized) {
+    for (var i = 1; i <= 5; i++) {
+      if (i <= voteStandardized) {
         voteStar += '<i class="fas fa-star"></i>';
       } else {
         voteStar += '<i class="far fa-star"></i>';
