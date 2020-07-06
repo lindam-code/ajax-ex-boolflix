@@ -16,10 +16,9 @@ $(document).ready(function(){
   // una chiamata API per il genere e gli attori principali
   $(document).on('mouseenter','.movie-info',function(){
     var id = $(this).attr('data-id');
-    console.log(id);
-    
-
-    // getGenreInfo(id,type);
+    var type = $(this).find('.type').attr('data-type');
+    var thisInfo = $(this);
+    getGenreInfo(id,type,thisInfo);
   });
 
   // FUNZIONI
@@ -168,12 +167,12 @@ $(document).ready(function(){
   // Accetta: id, id del film del quale recuperare le info sul genere
   // Accetta: type, stringa per sapere se è un film o una serie TV
   // Return: niente, aggiunge le info sulla pagina
-  function getGenreInfo(id,type) {
+  function getGenreInfo(id,type,thisInfo) {
     // Inizio chiamata Ajax
     if (type === 'Movies') {
-      var url = 'https://api.themoviedb.org/3/search/movie/' + id;
+      var url = 'https://api.themoviedb.org/3/movie/' + id;
     } else {
-      var url = 'https://api.themoviedb.org/3/search/tv/' + id;
+      var url = 'https://api.themoviedb.org/3/tv/' + id;
     }
 
     var apiKey = '4c34d07e5d578ee7bace09dde277dacb';
@@ -186,28 +185,38 @@ $(document).ready(function(){
           language: 'it-IT',
         },
         success: function(dataResponse){
-          var arrayData = dataResponse.results;
-          console.log(arrayData);
-          // if (arrayData.length > 0) {
-          //   appendGenresInfo();
-          //   // printData(arrayData,type);
-          // } else {
-          //   if (type === 'Movies') {
-          //     var message = 'Mi dispiace: non è possibile recuperare le informazioni sul genere del film.';
-          //   } else {
-          //      var message = 'Mi dispiace: non è possibile recuperare le informazioni sul genere della serie tv.';
-          //   }
-          //   printError(message);
-          // };
+          var arrayInfo = dataResponse.genres;
+          if (arrayInfo.length > 0) {
+            appendGenresInfo(arrayInfo,thisInfo);
+          } else {
+            var message = 'Mi dispiace: non è possibile recuperare le informazioni sul genere.';
+          }
+
         },
         error: function(){
           var message = 'Mi dispiace: non è possibile recuperare le informazioni sul genere.';
-          printError(message);
         }
       }
     );
-      // Fine chiamata Ajax per vedere film
   };
+
+  // Funzio per appendere le informazioni sul genere del fil o della serie TV
+  // Accetta: arrayInfo, array con le informazioni aggiuntive da appendere alle
+  // informazioni generali
+  // Return: niente appende solo le informazioni
+  function appendGenresInfo(arrayInfo,thisInfo) {
+    // Preparo template di Handelbars
+    var source = $('#info-template').html();
+    var template = Handlebars.compile(source);
+    for (var i = 0; i < arrayInfo.length; i++) {
+      var arrayGenre = [];
+      arrayGenre.push((arrayInfo[i]).name);
+    }
+    var context = {genre: arrayGenre};
+    var html = template(context);
+    thisInfo.append(html);
+  };
+
 
   // FINE FUNZIONI
 });

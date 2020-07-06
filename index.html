@@ -32,7 +32,7 @@
             <li>Titolo originale: {{originalTitle}}</li>
             <li>Lingua: {{{lenguage}}}</li>
             <li>Voto: {{{vote}}}</li>
-            <li class="type">Tipo: {{type}}</li>
+            <li class="type" data-type="{{type}}">Tipo: {{type}}</li>
             <li>Descrizione: {{overview}}</li>
           </ul>
         </div>
@@ -42,6 +42,12 @@
     <script id="error-template" type="text/x-handlebars-template">
       <span>{{message}}</span>
     </script>
+
+    <script id="info-template" type="text/x-handlebars-template">
+      <li>Genere: {{genre}}</li>
+    </script>
+
+
     <!-- Fine template handlebars -->
 
     <!-- Script di javascript -->
