@@ -1,6 +1,5 @@
 $(document).ready(function(){
   // API key: 4c34d07e5d578ee7bace09dde277dacb
-  // API eg: https://api.themoviedb.org/3/movie/550?api_key=4c34d07e5d578ee7bace09dde277dacb
 
   // Associo un evento al tasto invio della input, salvo il valore della input
   // e la passo ad una funzione che fa le chiamate API e stampa a schermo i risultati
@@ -11,6 +10,16 @@ $(document).ready(function(){
       getData(userSearch,'Movies');
       getData(userSearch,'TV');
     };
+  });
+
+  // Associo ad un evento di mouse enter nelle info dei film
+  // una chiamata API per il genere e gli attori principali
+  $(document).on('mouseenter','.movie-info',function(){
+    var id = $(this).attr('data-id');
+    console.log(id);
+    
+
+    // getGenreInfo(id,type);
   });
 
   // FUNZIONI
@@ -76,6 +85,7 @@ $(document).ready(function(){
         var originalTitle = singleMovie.original_name;
       }
       var context = {
+        id: singleMovie.id,
         title: title,
         cover: getPosterImage(singleMovie.poster_path, title),
         originalTitle: originalTitle,
@@ -152,5 +162,52 @@ $(document).ready(function(){
     }
     return flag;
   };
+
+  // Funzione per richiamare le info aggiuntive dei film, come il genere
+  // e gli attori principali
+  // Accetta: id, id del film del quale recuperare le info sul genere
+  // Accetta: type, stringa per sapere se è un film o una serie TV
+  // Return: niente, aggiunge le info sulla pagina
+  function getGenreInfo(id,type) {
+    // Inizio chiamata Ajax
+    if (type === 'Movies') {
+      var url = 'https://api.themoviedb.org/3/search/movie/' + id;
+    } else {
+      var url = 'https://api.themoviedb.org/3/search/tv/' + id;
+    }
+
+    var apiKey = '4c34d07e5d578ee7bace09dde277dacb';
+    $.ajax(
+      {
+        url: url,
+        method: 'GET',
+        data: {
+          api_key: apiKey,
+          language: 'it-IT',
+        },
+        success: function(dataResponse){
+          var arrayData = dataResponse.results;
+          console.log(arrayData);
+          // if (arrayData.length > 0) {
+          //   appendGenresInfo();
+          //   // printData(arrayData,type);
+          // } else {
+          //   if (type === 'Movies') {
+          //     var message = 'Mi dispiace: non è possibile recuperare le informazioni sul genere del film.';
+          //   } else {
+          //      var message = 'Mi dispiace: non è possibile recuperare le informazioni sul genere della serie tv.';
+          //   }
+          //   printError(message);
+          // };
+        },
+        error: function(){
+          var message = 'Mi dispiace: non è possibile recuperare le informazioni sul genere.';
+          printError(message);
+        }
+      }
+    );
+      // Fine chiamata Ajax per vedere film
+  };
+
   // FINE FUNZIONI
 });

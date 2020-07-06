@@ -26,13 +26,13 @@
     <script id="movie-template" type="text/x-handlebars-template">
       <div class="movie">
         {{{cover}}}
-        <div class="movie-info hide">
+        <div class="movie-info hide" data-id="{{id}}">
           <h2>Titolo: {{title}}</h2>
           <ul>
             <li>Titolo originale: {{originalTitle}}</li>
             <li>Lingua: {{{lenguage}}}</li>
             <li>Voto: {{{vote}}}</li>
-            <li>Tipo: {{type}}</li>
+            <li class="type">Tipo: {{type}}</li>
             <li>Descrizione: {{overview}}</li>
           </ul>
         </div>
