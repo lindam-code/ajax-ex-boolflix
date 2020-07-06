@@ -39,7 +39,6 @@ header #search-movie {
   background-color: black;
   color: white;
   border: 2px solid white;
-  margin-bottom: 25px;
 }
 .movie-info {
   width: 100%;
@@ -49,7 +48,7 @@ header #search-movie {
 .hide {
   display: none;
 }
-.movie:hover img {
+.movie:hover .cover-image {
   display: none;
 }
 .movie:hover .movie-info {
