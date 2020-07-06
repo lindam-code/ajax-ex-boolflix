@@ -24,9 +24,9 @@
 
     <!-- Inizio template handlebars -->
     <script id="movie-template" type="text/x-handlebars-template">
-      <div class="movie">
+      <div class="movie" data-id="{{id}}">
         {{{cover}}}
-        <div class="movie-info hide" data-id="{{id}}">
+        <div class="movie-info hide">
           <h2>Titolo: {{title}}</h2>
           <ul>
             <li>Titolo originale: {{originalTitle}}</li>
@@ -34,6 +34,7 @@
             <li>Voto: {{{vote}}}</li>
             <li class="type" data-type="{{type}}">Tipo: {{type}}</li>
             <li>Descrizione: {{overview}}</li>
+            <div class="genres"></div>
           </ul>
         </div>
       </div>
@@ -44,7 +45,7 @@
     </script>
 
     <script id="info-template" type="text/x-handlebars-template">
-      <li>Genere: {{genre}}</li>
+      <span>Generi: {{genre}}</span>
     </script>
 
 

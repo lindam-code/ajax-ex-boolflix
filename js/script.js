@@ -12,15 +12,6 @@ $(document).ready(function(){
     };
   });
 
-  // Associo ad un evento di mouse enter nelle info dei film
-  // una chiamata API per il genere e gli attori principali
-  $(document).on('mouseenter','.movie-info',function(){
-    var id = $(this).attr('data-id');
-    var type = $(this).find('.type').attr('data-type');
-    var thisInfo = $(this);
-    getGenreInfo(id,type,thisInfo);
-  });
-
   // FUNZIONI
   // Funzione che fa la chiamata Aajax per i film e le serie TV
   // Accetta: queryUser, stringa del titolo (o una parte) del film o della serie da cercare
@@ -95,6 +86,7 @@ $(document).ready(function(){
       };
       var html = template(context);
       $('#movie-container').append(html);
+      getDetails(singleMovie.id,type);
     }
   };
 
@@ -130,7 +122,6 @@ $(document).ready(function(){
     return imgPoster;
   };
 
-
   // Funzione che trasforma un voto decimale in un voto a 5 stelline
   // Accetta: vote, un voto decimale
   // Return: voteStar, una stringa con le stelline di font awesome
@@ -164,10 +155,10 @@ $(document).ready(function(){
 
   // Funzione per richiamare le info aggiuntive dei film, come il genere
   // e gli attori principali
-  // Accetta: id, id del film del quale recuperare le info sul genere
+  // Accetta: id, id del film del quale recuperare le info aggiuntive
   // Accetta: type, stringa per sapere se è un film o una serie TV
   // Return: niente, aggiunge le info sulla pagina
-  function getGenreInfo(id,type,thisInfo) {
+  function getDetails(id,type) {
     // Inizio chiamata Ajax
     if (type === 'Movies') {
       var url = 'https://api.themoviedb.org/3/movie/' + id;
@@ -183,15 +174,13 @@ $(document).ready(function(){
         data: {
           api_key: apiKey,
           language: 'it-IT',
+          append_to_response: 'credits'
         },
         success: function(dataResponse){
-          var arrayInfo = dataResponse.genres;
-          if (arrayInfo.length > 0) {
-            appendGenresInfo(arrayInfo,thisInfo);
-          } else {
-            var message = 'Mi dispiace: non è possibile recuperare le informazioni sul genere.';
-          }
-
+          console.log(dataResponse);
+          var arrayGenres = dataResponse.genres;
+          var arrayCredits = dataResponse.credits.cast;
+            appendDetails(id,arrayGenres,arrayCredits);
         },
         error: function(){
           var message = 'Mi dispiace: non è possibile recuperare le informazioni sul genere.';
@@ -200,23 +189,22 @@ $(document).ready(function(){
     );
   };
 
-  // Funzio per appendere le informazioni sul genere del fil o della serie TV
-  // Accetta: arrayInfo, array con le informazioni aggiuntive da appendere alle
-  // informazioni generali
+  // Funzione per appendere le informazioni sul genere e sul cats del film o della serie TV
+  // Accetta: id,
+  // Accetta: arrayGenres, array con le informazioni aggiuntive sul genere
+  // Accetta: arrayCredits, array con le info sul cast
   // Return: niente appende solo le informazioni
-  function appendGenresInfo(arrayInfo,thisInfo) {
+  function appendDetails(id,arrayGenres,arrayCredits) {
     // Preparo template di Handelbars
     var source = $('#info-template').html();
     var template = Handlebars.compile(source);
-    for (var i = 0; i < arrayInfo.length; i++) {
-      var arrayGenre = [];
-      arrayGenre.push((arrayInfo[i]).name);
+    var arrayGenre = [];
+    for (var i = 0; i < arrayGenres.length; i++) {
+      arrayGenre.push((arrayGenres[i]).name);
     }
     var context = {genre: arrayGenre};
     var html = template(context);
-    thisInfo.append(html);
+    $('.movie[data-id="'+ id +'"').find('.genres').append(html);
   };
-
-
   // FINE FUNZIONI
 });
