@@ -115,7 +115,7 @@ $(document).ready(function(){
       var coverSize = '/w342'
       var imgPoster = '<img src="' + urlBase + coverSize + posterPath + '" alt="' + title + '">'
     } else {
-      var imgPoster = '<h2>' + title + '</h2>' + '<img src="img/default-poster.jpg" alt="default poster image">'
+      var imgPoster = '<h2>' + title + '</h2>' + '<img src="img/default-poster.jpg" class="default-cover" alt="default poster image">'
     }
     return imgPoster;
   };
