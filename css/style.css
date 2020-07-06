@@ -77,6 +77,9 @@ header #search-movie {
   padding: 25px;
   overflow-y: auto;
 }
+.movie-info span {
+  display: block;
+}
 .movie ul li {
   list-style-type: none;
 }

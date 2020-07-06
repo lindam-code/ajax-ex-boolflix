@@ -177,10 +177,9 @@ $(document).ready(function(){
           append_to_response: 'credits'
         },
         success: function(dataResponse){
-          console.log(dataResponse);
           var arrayGenres = dataResponse.genres;
-          var arrayCredits = dataResponse.credits.cast;
-            appendDetails(id,arrayGenres,arrayCredits);
+          var arrayCast = dataResponse.credits.cast;
+            appendDetails(id,arrayGenres,arrayCast);
         },
         error: function(){
           var message = 'Mi dispiace: non è possibile recuperare le informazioni sul genere.';
@@ -194,17 +193,21 @@ $(document).ready(function(){
   // Accetta: arrayGenres, array con le informazioni aggiuntive sul genere
   // Accetta: arrayCredits, array con le info sul cast
   // Return: niente appende solo le informazioni
-  function appendDetails(id,arrayGenres,arrayCredits) {
+  function appendDetails(id,arrayGenres,arrayCast) {
     // Preparo template di Handelbars
     var source = $('#info-template').html();
     var template = Handlebars.compile(source);
     var arrayGenre = [];
     for (var i = 0; i < arrayGenres.length; i++) {
       arrayGenre.push((arrayGenres[i]).name);
+    };
+    var cast = [];
+    for (var j = 0; j < 5; j++) {
+      cast.push((arrayCast[j]).character + ' : ' + (arrayCast[j]).name);
     }
-    var context = {genre: arrayGenre};
+    var context = {genre: arrayGenre, cast: cast};
     var html = template(context);
-    $('.movie[data-id="'+ id +'"').find('.genres').append(html);
+    $('.movie[data-id="'+ id +'"').find('.additional-info').append(html);
   };
   // FINE FUNZIONI
 });
