@@ -129,9 +129,9 @@ $(document).ready(function(){
     var voteStar = '';
     for (var i = 1; i <= 5; i++) {
       if (i <= voteStandardized) {
-        voteStar += '<i class="fas fa-star"></i>';
+        voteStar += '<i class="fas fa-star star"></i>';
       } else {
-        voteStar += '<i class="far fa-star"></i>';
+        voteStar += '<i class="far fa-star star"></i>';
       };
     };
     return voteStar;

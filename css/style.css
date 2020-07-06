@@ -60,6 +60,9 @@ header #search-movie {
 .movie img {
   width: 100%;
 }
+.movie .star {
+  color: yellow;
+}
 .movie .flag {
   width: 20px;
 }
