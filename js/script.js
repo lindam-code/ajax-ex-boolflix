@@ -75,10 +75,9 @@ $(document).ready(function(){
         var title = singleMovie.name;
         var originalTitle = singleMovie.original_name;
       }
-      var coverSize = '/w342';
       var context = {
         title: title,
-        cover: '<img src="https://image.tmdb.org/t/p'+ coverSize + singleMovie.poster_path +'" alt="cover movie">',
+        cover: getPosterImage(singleMovie.poster_path, title),
         originalTitle: originalTitle,
         lenguage: getFlag(singleMovie.original_language),
         vote: convertToStar(singleMovie.vote_average),
@@ -105,6 +104,22 @@ $(document).ready(function(){
     var html = template(context);
     $('#movie-container').append(html);
   };
+
+  // Funzione per fare vedere la copertina del film
+  // Accetta: posterPath, stringa con url dell'img o null
+  // Accetta: title, stringa con il titolo del film
+  // Return: imgPoster, stringa con html img e url, o titolo del film
+  function getPosterImage(posterPath, title) {
+    if (posterPath) {
+      var urlBase = 'https://image.tmdb.org/t/p';
+      var coverSize = '/w342'
+      var imgPoster = '<img src="' + urlBase + coverSize + posterPath + '" alt="' + title + '">'
+    } else {
+      var imgPoster = '<h2>' + title + '</h2>' + '<img src="img/default-poster.jpg" alt="default poster image">'
+    }
+    return imgPoster;
+  };
+
 
   // Funzione che trasforma un voto decimale in un voto a 5 stelline
   // Accetta: vote, un voto decimale
