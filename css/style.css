@@ -1,8 +1,12 @@
+/* RESET */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+/* FINE RESET */
+
+/* LAYOUT PAGINA */
 .main-wrapper {
   width: 100%;
   height: 100vh;
@@ -23,6 +27,7 @@ header .logo {
 header #search-movie {
   width: 300px;
   height: 30px;
+  padding-left: 10px;
 }
 #movie-container {
   width: 100%;
@@ -33,32 +38,47 @@ header #search-movie {
   justify-content: space-around;
   overflow-y: scroll;
 }
+
+/* Inizio custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #b1b1b1;
+  border-radius: 10px;
+}
+/* Fine custom scrollbar */
+/* FINE LAYOUT PAGINA */
+
+/* STILE FILM */
 .movie {
   flex-basis: 27%;
+  height: 464px;
   margin: 25px 0;
   background-color: black;
   color: white;
   border: 2px solid white;
 }
+.movie .cover-image {
+  width: 100%;
+  height: 100%;
+}
+.movie .default-cover {
+  width: 100%;
+}
 .movie-info {
   width: 100%;
   height: 100%;
   padding: 25px;
-}
-.hide {
-  display: none;
-}
-.movie:hover .cover-image {
-  display: none;
-}
-.movie:hover .movie-info {
-  display: block;
+  overflow-y: auto;
 }
 .movie ul li {
   list-style-type: none;
-}
-.movie img {
-  width: 100%;
 }
 .movie .star {
   color: yellow;
@@ -66,3 +86,14 @@ header #search-movie {
 .movie .flag {
   width: 20px;
 }
+.hide {
+  display: none;
+}
+.movie:hover .cover-image,
+.movie:hover .default-cover {
+  display: none;
+}
+.movie:hover .movie-info {
+  display: block;
+}
+/* FINE STILE FILM */

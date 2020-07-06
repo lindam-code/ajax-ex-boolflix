@@ -81,7 +81,8 @@ $(document).ready(function(){
         originalTitle: originalTitle,
         lenguage: getFlag(singleMovie.original_language),
         vote: convertToStar(singleMovie.vote_average),
-        type: type
+        type: type,
+        overview: singleMovie.overview
       };
       var html = template(context);
       $('#movie-container').append(html);
@@ -115,7 +116,7 @@ $(document).ready(function(){
       var coverSize = '/w342'
       var imgPoster = '<img src="' + urlBase + coverSize + posterPath + '" alt="' + title + '" class="cover-image">'
     } else {
-      var imgPoster = '<h2>' + title + '</h2>' + '<img src="img/default-poster.jpg" class="cover-image" alt="default poster image">'
+      var imgPoster = '<h2>' + title + '</h2>' + '<img src="img/default-poster.jpg" class="default-cover" alt="default poster image">'
     }
     return imgPoster;
   };
