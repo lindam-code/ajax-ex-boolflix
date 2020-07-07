@@ -7,9 +7,8 @@
 /* FINE RESET */
 
 /* LAYOUT PAGINA */
-.main-wrapper {
-  width: 100%;
-  height: 100vh;
+body {
+  background-color: grey;
 }
 header {
   width: 100%;
@@ -31,8 +30,6 @@ header #search-movie {
 }
 #movie-container {
   width: 100%;
-  height: calc(100% - 80px);
-  background-color: grey;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -57,25 +54,28 @@ header #search-movie {
 
 /* STILE FILM */
 .movie {
-  flex-basis: 27%;
-  height: 464px;
+  flex-basis: 342px;
+  height: 450px;
   margin: 25px 0;
   background-color: black;
   color: white;
   border: 2px solid white;
+  position: relative;
+  overflow-y: auto;
 }
-.movie .cover-image {
+.movie > .cover-image {
   width: 100%;
   height: 100%;
+  border: 2px solid white;
 }
-.movie .default-cover {
+.movie > .default-cover {
   width: 100%;
 }
 .movie-info {
   width: 100%;
-  height: 100%;
+  position: absolute;
+  top: 0;
   padding: 25px;
-  overflow-y: auto;
 }
 .movie-info span {
   display: block;
